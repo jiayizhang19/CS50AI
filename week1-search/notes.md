@@ -29,8 +29,9 @@ One player wants to minimise the game, while the other wants to maximise.
 ![Minimax](./images/MiniMax.JPG)
 Pseudocode:
 - Given a status s:
- - MAX picks action *a* in ACTIONS(s) that produces **highest** value of MIN-VALUE(RESULT(s,a))
- - MIN picks action *a* in ACTIONS(s) that produces **smallest** value of MAX-VALUE(RESULT(s,a)) 
+ -- MAX picks action *a* in ACTIONS(s) that produces **highest** value of MIN-VALUE(RESULT(s,a))
+ -- MIN picks action *a* in ACTIONS(s) that produces **smallest** value of MAX-VALUE(RESULT(s,a)) 
+ - (To be updated)
  #### Alpha-Beta Pruning - Optimization to Minimax
  ![Alpha-Beta Pruning](./images/AlphaBetaPruning.JPG)
  #### Depth-Limited Minimax 
