@@ -14,7 +14,7 @@
 - a parent (node that generated this node)
 - an action (action applied to parent to get node)
 - a path cost (from initial state to node)
-### 1.3 Approach
+### 1.3 Solving Search Problems
 - Start from a frontier that contains the initial state only
     - frontier: all of the things that we could explore next, that we haven't yet explored or visited
 - **Start with an empty explored set.**
