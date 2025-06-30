@@ -31,38 +31,51 @@ To find an optimal solution that leads from the initial state to a goal state wi
 ### 2.1 Classical Search
 #### 2.1.1 Uninformed Search
 A search strategy that uses no problem-specific knowledge.
-##### 2.1.1.1 DFS (Depth-First Search)
+- **DFS (Depth-First Search)**
 A search algorithm that always expands the **deepest** node in the frontier.
 It uses a **stack** data structure -- last in, first out.
 *Note: It is possible that DFS might not find the optimal solution.*
-##### 2.1.2.2 BFS (Breadth-Frist Search)
+- **BFS (Breadth-Frist Search)**
 A search algorithm that always expands the **shallowest** node in the frontier.
 It uses a **queue** data structure -- first in, first out.
 #### 2.1.2 Informed Search
 A search stratrgy that uses problem-specifc knowledge.
-##### 2.1.2.1 Greedy Best-First Search
+- **Greedy Best-First Search**
 A search algorithm that expands the node that is closet to the goal, as estimated by a heuristic function h(n). 
-- Heuristic funtion is also called Manhatten distance, where the heuristic is how many squares vertically and horizontally to get from each of these cells to the goal, or in short terms, the geographical distance to the goal.
+    - Heuristic funtion is also called Manhatten distance, where the heuristic is how many squares vertically and horizontally to get from each of these cells to the goal, or in short terms, the geographical distance to the goal.
+
 ![Greedy Best-First Search](./images/GreedyBestFirstSearch.JPG)
 
 *Note: The search algorithm is not going to know for sure whether it is the closest thing to the goal, it is just esimating. So how good is the heuristic is, is going to affect how good this algorithm is.*
-##### 2.1.2.2 A* Search
+
+- **A* Search**
 A search algorithm that expands node with lowest value of g(n) + h(n), wherein,
-g(n) = cost that has already been taken to the current node,
-h(n) = estimated cost to goal.
+    - g(n) = cost that has already been taken to the current node, 
+    - h(n) = estimated cost to goal.
+
 ![A* Search](./images/ASearch.JPG)
 
 ### 2.2 Adversarial Search
 #### 2.2.1 Minimax
-One player wants to minimise the game, while the other wants to maximise.
+Minimax represents winning conditions as -1 for one side and +1 for the other side. The minimising side trys to get the lowest score, and the maximiser trys to get the highest score. It could also be called a recursive algorithm
+- S<sub>0</sub>: Initial state
+- Player(s): returns which player to move in state s
+- Actions(s): returns legal moves in state s
+- Result(s,a): returns state after action a taken in state s
+- Terminal(s): checks if state s is a terminal state
+- Utility(s): final numerical value for terminal state s
+
 ![Minimax](./images/MiniMax.JPG)
 
 Pseudocode:
 - Given a status s:
-    - MAX picks action *a* in ACTIONS(s) that produces **highest** value of MIN-VALUE(RESULT(s,a))
-    - MIN picks action *a* in ACTIONS(s) that produces **smallest** value of MAX-VALUE(RESULT(s,a)) 
-    - (To be updated)
+    - MAX picks action *a* in ACTIONS(s) that produces **highest** value of MIN-VALUE(Result(s,a))
+    - MIN picks action *a* in ACTIONS(s) that produces **smallest** value of MAX-VALUE(Result(s,a)) 
+- Function Max-Value(state)
+    - v = -∞
+
  #### 2.2.2 Alpha-Beta Pruning - Optimization to Minimax
+ 
  ![Alpha-Beta Pruning](./images/AlphaBetaPruning.JPG)
  #### 2.2.3 Depth-Limited Minimax 
  The original Minimax is depth-unlimited until we get to the end of the game. While depth-limited minimax is going to stop and not consider additional moves that might come after certain movements ahead.
