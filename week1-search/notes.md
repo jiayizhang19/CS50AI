@@ -8,12 +8,14 @@
     - It is usually defined as a funtion, **RESULT(s,a)** returns the state resulting from perfroming action a in state s.
 - **goal test**: way to determine whether a given state is a goal state
 - **path cost function**: numerical cost assocaited with a given path
+
 ### 1.2 Data structure --> To package and track the whole bunch of above data 
 **node**, a data structure that keeps track of 
 - a state
 - a parent (node that generated this node)
 - an action (action applied to parent to get node)
 - a path cost (from initial state to node)
+
 ### 1.3 Solving Search Problems
 - Start from a frontier that contains the initial state only
     - frontier: all of the things that we could explore next, that we haven't yet explored or visited
@@ -25,7 +27,9 @@
     - If a node contains goal state, return the solution.
     - **Add the node to the explored set.**
     - Otherwise, expand node, add resulting nodes to the frontier **if they aren't already in the frontier or the explored set.**
-        - *expand node, a term in AI, means to look at all of the neighbours of that node, or to consider all of the possible actions  .*
+        - *expand node, a term in AI, means to look at all of the neighbours of that node, or to consider all of the possible actions.*
+
+
 ## 2 Search Algorithm
 To find an optimal solution that leads from the initial state to a goal state with the lowest path cost
 ### 2.1 Classical Search
@@ -38,6 +42,7 @@ It uses a **stack** data structure -- last in, first out.
 - **BFS (Breadth-Frist Search)**
 A search algorithm that always expands the **shallowest** node in the frontier.
 It uses a **queue** data structure -- first in, first out.
+
 #### 2.1.2 Informed Search
 A search stratrgy that uses problem-specifc knowledge.
 - **Greedy Best-First Search**
@@ -71,11 +76,24 @@ Pseudocode:
 - Given a status s:
     - MAX picks action *a* in ACTIONS(s) that produces **highest** value of MIN-VALUE(Result(s,a))
     - MIN picks action *a* in ACTIONS(s) that produces **smallest** value of MAX-VALUE(Result(s,a)) 
-- Function Max-Value(state)
-    - v = -∞
+- function Max-Value(state):
+    if terminal(state):
+        return utility(state)
+    v = -∞
+    for action in actions(state):
+        v = max(v, Min-Value(result(state, action)))
+    return v
+- function Min-Value(state):
+    if terminal(state):
+        return utility(state)
+    v = ∞
+    for action in actions(state):
+        v = min(v, Max-Value(result(state, action)))
+    return v
 
- #### 2.2.2 Alpha-Beta Pruning - Optimization to Minimax
+ #### 2.2.2 Alpha-Beta Pruning: Optimization to Minimax
  
  ![Alpha-Beta Pruning](./images/AlphaBetaPruning.JPG)
+
  #### 2.2.3 Depth-Limited Minimax 
  The original Minimax is depth-unlimited until we get to the end of the game. While depth-limited minimax is going to stop and not consider additional moves that might come after certain movements ahead.

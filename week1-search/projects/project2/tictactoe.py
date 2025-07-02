@@ -31,16 +31,25 @@ def actions(board):
     """
     Returns set of all possible actions (i, j) available on the board.
     """
-    return [(i,j) for i,row in enumerate(board) for j,cell in enumerate(row) if cell == EMPTY]
-
+    return {(i,j) for i,row in enumerate(board) for j,cell in enumerate(row) if cell == EMPTY}
 
 def result(board, action):
     """
-    Returns the board that results from making move (i, j) on the board.
+    The result function takes a board and an action as input, and should return a new board state, without modifying the original board.
+    If action is not a valid action for the board, your program should raise an exception.
+    The returned board state should be the board that would result from taking the original input board, 
+    and letting the player whose turn it is make their move at the cell indicated by the input action.
+    Importantly, the original board should be left unmodified: since Minimax will ultimately require considering many different board states during its computation. 
+    This means that simply updating a cell in board itself is not a correct implementation of the result function. 
+    You'll likely want to make a deep copy of the board first before making any changes.
     """
-    i, j = action
-    board[i][j] = player(board)
-    return board
+    if action in actions(board):
+        new_board = [row[:] for row in board]
+        i, j = action
+        new_board[i][j] = player(board)
+        return new_board
+    else:
+        raise Exception("Not a valid action")
 
 
 def winner(board):
@@ -51,7 +60,7 @@ def winner(board):
         if len(set(row)) == 1 and row[0] != EMPTY:
             return row[0]
     for col in range(3):
-        if board[0][col] == board[1][col] == board[2][col] and board[0][1] != EMPTY:
+        if board[0][col] == board[1][col] == board[2][col] and board[0][col] != EMPTY:
             return board[0][col]
     if board[0][0] == board[1][1] == board[2][2] and board[0][0] != EMPTY:
         return board[0][0]
@@ -81,6 +90,51 @@ def utility(board):
 
 def minimax(board):
     """
-    Returns the optimal action for the current player on the board.
+    It takes a board as input, and return the optimal move for the player to move on that board.
+    The move returned should be the optimal action (i, j) that is one of the allowable actions on the board. 
+    If multiple moves are equally optimal, any of those moves is acceptable.
+    If the board is a terminal board, the minimax function should return None.
     """
-    raise NotImplementedError
+    if terminal(board):
+        return None
+    move = None
+    if player(board) == "X":
+        v = float("-inf")
+        for action in actions(board):
+            new_value = min_value(result(board, action))
+            if new_value > v:
+                v = new_value
+                move = action
+    else:
+        v = float("inf")
+        for action in actions(board):
+            new_value = max_value(result(board, action))
+            if new_value < v:
+                v = new_value
+                move = action
+    return move
+
+
+def min_value(board):
+    """
+    Returns the minimum value among all actions
+    """
+    if terminal(board):
+        return utility(board)
+    v = float("inf")
+    for action in actions(board):
+        v = min(v, max_value(result(board, action)))
+    return v
+
+
+def max_value(board):
+    """
+    Returns the maximum value among all actions
+    """
+    if terminal(board):
+        return utility(board)
+    v = float("-inf")
+    for action in actions(board):
+        v = max(v, min_value(result(board, action)))
+    return v
+

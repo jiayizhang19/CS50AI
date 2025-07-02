@@ -14,6 +14,9 @@ board_full = [[X, O, X],
               [O, X, O],
               [O, X, O]]
 
+board_minimax = [[O, X, X],
+                 [EMPTY, X, EMPTY],
+                 [O, EMPTY, O]]
 
 def test_player():
     assert player(board) == "O"
@@ -52,3 +55,7 @@ def test_utility():
         assert utility(board) == -1
     with patch("tictactoe.winner", return_value=None):
         assert utility(board) == 0
+
+
+def test_minimax():
+    assert minimax(board_minimax) == (2,1)
